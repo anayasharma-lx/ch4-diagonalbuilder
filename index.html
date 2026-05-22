@@ -5,268 +5,375 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Diagonal Builder — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:#d8d4cc;
-  --text:#1a1814;--text2:#5a5650;--text3:#9a958e;
-  --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
-  --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+  --paper:#faf8f4; --paper2:#f3f0ea; --paper3:#e8e3d8;
+  --ink:#1c1a16;   --ink2:#4a4640;   --ink3:#8a8580;
+  --rule:#d4cfc5;
+  --teal:#1d6a72;  --teal2:#2a8a94;  --teal-bg:#e8f4f5;
+  --rust:#b84a2a;  --rust-bg:#fdf0ec;
+  --gold:#c08030;  --gold-bg:#fdf5e8;
+  --sage:#3a6a48;  --sage-bg:#eaf2ec;
+  --violet:#6a4a90;--violet-bg:#f2eef8;
+  --font:'DM Sans',sans-serif;
+  --serif:'Lora',Georgia,serif;
+  --mono:'DM Mono',ui-monospace,monospace;
+  --shadow:0 2px 12px rgba(28,26,22,.08);
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
-.page{max-width:880px;margin:0 auto;padding:28px 20px}
-.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
-.title{font-size:22px;font-weight:700;margin-bottom:5px}
-.subtitle{font-size:14px;color:var(--text2);margin-bottom:22px;max-width:580px;line-height:1.5}
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
-.card-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:14px}
-.sl-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.sl-row label{font-size:13px;font-weight:500;color:var(--text2);min-width:160px}
-.sl-row input[type=range]{flex:1;height:5px;cursor:pointer}
-.sl-val{font-family:var(--mono);font-size:15px;font-weight:700;min-width:48px;text-align:right}
-canvas{display:block;width:100%;border-radius:10px;border:1.5px solid var(--border);background:#fafaf8;margin-bottom:16px}
-.result-banner{border-radius:12px;padding:16px 20px;border:2px solid;text-align:center;margin-bottom:14px}
-.rb-name{font-size:26px;font-weight:700;margin-bottom:4px}
-.rb-rule{font-size:13.5px;font-weight:500;opacity:.8}
-.props-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:14px}
-.prop-chip{padding:7px 12px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid;display:flex;align-items:center;gap:6px}
-.prop-chip.yes{background:#f0fdf4;border-color:#86efac;color:#15803d}
-.prop-chip.no{background:#f8f8f8;border-color:var(--border);color:var(--text3)}
-.prop-chip .picon{font-size:15px}
-.insight{background:#fff8f0;border:1.5px solid #f0d8c0;border-radius:10px;padding:13px 18px;font-size:13.5px;color:#6b4400;line-height:1.65}
-.insight strong{color:#a05000}
-.insight .eq{font-family:var(--mono);font-size:13px;display:block;margin:2px 0}
+body{font-family:var(--font);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;padding:28px 20px 60px;line-height:1.6;background-image:radial-gradient(circle at 20% 30%,rgba(192,128,48,.04) 0,transparent 50%),radial-gradient(circle at 80% 70%,rgba(29,106,114,.04) 0,transparent 50%)}
+.app{max-width:880px;margin:0 auto}
+
+.header{margin-bottom:24px;padding-bottom:18px;border-bottom:1.5px solid var(--rule)}
+.chapter-badge{display:inline-flex;align-items:center;gap:8px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:20px;padding:4px 14px 4px 10px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.badge-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center}
+h1{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2;margin-bottom:5px}
+.header-sub{font-size:14px;color:var(--ink2);max-width:580px;line-height:1.55}
+
+.card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.concept{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:20px;font-family:var(--serif);font-style:italic;font-size:14px;color:#4a3010;line-height:1.65}
+.concept strong{font-style:normal;font-weight:700;color:#3a2008}
+
+/* SLIDERS */
+.sliders-grid{display:flex;flex-direction:column;gap:14px}
+.sl-row{display:flex;align-items:center;gap:10px}
+.sl-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;font-family:var(--mono);flex-shrink:0;color:#fff}
+.sl-meta{flex:1;min-width:0}
+.sl-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:4px}
+.sl-track{display:flex;align-items:center;gap:8px}
+.sl-track input[type=range]{flex:1;height:5px;cursor:pointer;border-radius:3px}
+.sl-val{font-family:var(--mono);font-size:15px;font-weight:800;min-width:52px;text-align:right}
+
+/* CANVAS */
+.canvas-wrap{background:var(--paper2);border:1.5px solid var(--rule);border-radius:12px;overflow:hidden;margin-bottom:16px;position:relative}
+#cvs{display:block;width:100%}
+
+/* SHAPE BANNER */
+.shape-banner{border-radius:12px;padding:16px 20px;border:2.5px solid;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transition:all .25s}
+.sb-emoji{font-size:36px;flex-shrink:0}
+.sb-right{flex:1;min-width:0}
+.sb-name{font-family:var(--serif);font-size:24px;font-weight:700;margin-bottom:2px;transition:color .2s}
+.sb-rule{font-size:12.5px;color:var(--ink2);font-style:italic;line-height:1.4}
+
+/* PROPERTIES */
+.props-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink3);margin-bottom:9px}
+.props-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:6px;margin-bottom:16px}
+.prop-chip{padding:7px 11px;border-radius:8px;font-size:12.5px;font-weight:600;border:1.5px solid;display:flex;align-items:center;gap:7px;transition:all .2s}
+.prop-chip.yes{background:var(--sage-bg);border-color:#8abcaa;color:var(--sage)}
+.prop-chip.no{background:var(--paper2);border-color:var(--rule);color:var(--ink3)}
+.prop-icon{font-size:13px;flex-shrink:0;width:16px;text-align:center}
+
+/* INSIGHT */
+.insight{background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65}
+.insight strong{color:#4a2e00}
+.insight code{font-family:var(--mono);font-weight:700;background:rgba(192,128,48,.15);padding:1px 5px;border-radius:4px;font-size:12px}
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="lbl">Chapter 4 · Quadrilaterals</div>
-  <div class="title">Diagonal Builder</div>
-  <div class="subtitle">The diagonals determine the quadrilateral. Change their lengths and the crossing angle — and watch which quadrilateral appears. This is the carpenter's problem made interactive.</div>
+<div class="app">
+  <div class="header">
+    <div class="chapter-badge"><div class="badge-num">4</div>Chapter 4 · Quadrilaterals</div>
+    <h1>Diagonal Builder</h1>
+    <p class="header-sub">The diagonals define the quadrilateral. Adjust their lengths, crossing angle, and split point — and watch which shape emerges. Every special quadrilateral is just a special set of diagonal rules.</p>
+  </div>
 
   <div class="card">
-    <div class="sl-row">
-      <label>Diagonal 1 length (AC)</label>
-      <input type="range" id="d1" min="40" max="200" value="120" style="accent-color:var(--blue)" oninput="render()">
-      <span class="sl-val" style="color:var(--blue)" id="d1v">120</span>
-    </div>
-    <div class="sl-row">
-      <label>Diagonal 2 length (BD)</label>
-      <input type="range" id="d2" min="40" max="200" value="120" style="accent-color:var(--red)" oninput="render()">
-      <span class="sl-val" style="color:var(--red)" id="d2v">120</span>
-    </div>
-    <div class="sl-row">
-      <label>Crossing angle (°)</label>
-      <input type="range" id="ang" min="20" max="160" value="90" style="accent-color:var(--orange)" oninput="render()">
-      <span class="sl-val" style="color:var(--orange)" id="angv">90°</span>
-    </div>
-    <div class="sl-row">
-      <label>Split point on AC</label>
-      <input type="range" id="split" min="10" max="90" value="50" style="accent-color:var(--green)" oninput="render()">
-      <span class="sl-val" style="color:var(--green)" id="splitv">50%</span>
+    <div class="concept"><strong>The key idea:</strong> two sticks crossed at a point, with four endpoints connected in order, always form a quadrilateral. Changing <em>how</em> they cross — equal lengths? perpendicular? bisecting? — determines whether you get a square, rhombus, kite, or something else entirely.</div>
+
+    <div class="sliders-grid">
+      <div class="sl-row">
+        <div class="sl-icon" style="background:var(--teal)">d₁</div>
+        <div class="sl-meta">
+          <div class="sl-label">Diagonal AC — length</div>
+          <div class="sl-track">
+            <input type="range" id="d1" min="40" max="220" value="140" style="accent-color:var(--teal)" oninput="render()">
+            <span class="sl-val" style="color:var(--teal)" id="d1v">140</span>
+          </div>
+        </div>
+      </div>
+      <div class="sl-row">
+        <div class="sl-icon" style="background:var(--rust)">d₂</div>
+        <div class="sl-meta">
+          <div class="sl-label">Diagonal BD — length</div>
+          <div class="sl-track">
+            <input type="range" id="d2" min="40" max="220" value="140" style="accent-color:var(--rust)" oninput="render()">
+            <span class="sl-val" style="color:var(--rust)" id="d2v">140</span>
+          </div>
+        </div>
+      </div>
+      <div class="sl-row">
+        <div class="sl-icon" style="background:var(--gold)">∠</div>
+        <div class="sl-meta">
+          <div class="sl-label">Crossing angle at O</div>
+          <div class="sl-track">
+            <input type="range" id="ang" min="20" max="160" value="90" style="accent-color:var(--gold)" oninput="render()">
+            <span class="sl-val" style="color:var(--gold)" id="angv">90°</span>
+          </div>
+        </div>
+      </div>
+      <div class="sl-row">
+        <div class="sl-icon" style="background:var(--violet)">÷</div>
+        <div class="sl-meta">
+          <div class="sl-label">Split point on AC — where BD crosses</div>
+          <div class="sl-track">
+            <input type="range" id="split" min="10" max="90" value="50" style="accent-color:var(--violet)" oninput="render()">
+            <span class="sl-val" style="color:var(--violet)" id="splitv">50%</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <canvas id="cvs" height="340"></canvas>
+  <div class="canvas-wrap"><canvas id="cvs" height="340"></canvas></div>
 
-  <div class="result-banner" id="resultBanner">
-    <div class="rb-name" id="rbName">—</div>
-    <div class="rb-rule" id="rbRule">—</div>
+  <div class="shape-banner" id="shape-banner">
+    <div class="sb-emoji" id="sb-emoji">◇</div>
+    <div class="sb-right">
+      <div class="sb-name" id="sb-name">Square</div>
+      <div class="sb-rule" id="sb-rule">Equal diagonals + bisect each other + cross at 90°</div>
+    </div>
   </div>
 
-  <div class="props-grid" id="propsGrid"></div>
+  <div class="props-lbl">Properties of this shape</div>
+  <div class="props-grid" id="props-grid"></div>
 
   <div class="insight" id="insight"></div>
 </div>
 
 <script>
-const QUAD_COLORS={
-  'Square':    {bg:'rgba(26,122,74,.1)',  border:'#1a7a4a', text:'#1a7a4a'},
-  'Rectangle': {bg:'rgba(44,95,158,.1)', border:'#2c5f9e', text:'#2c5f9e'},
-  'Rhombus':   {bg:'rgba(192,57,43,.08)',border:'#c0392b', text:'#c0392b'},
-  'Parallelogram':{bg:'rgba(224,128,32,.1)',border:'#e08020', text:'#e08020'},
-  'Kite':      {bg:'rgba(109,40,217,.08)',border:'#6d28d9', text:'#6d28d9'},
-  'General':   {bg:'var(--surface2)',    border:'var(--border)', text:'var(--text)'},
+const SHAPES = {
+  Square:        {emoji:'⬜', color:'#3a6a48', bg:'#eaf2ec', border:'#8abcaa',
+                  rule:'Equal diagonals + bisect each other + cross at 90°'},
+  Rectangle:     {emoji:'▭',  color:'#1d6a72', bg:'#e8f4f5', border:'#7abcc8',
+                  rule:'Equal diagonals + bisect each other (any angle)'},
+  Rhombus:       {emoji:'◆',  color:'#b84a2a', bg:'#fdf0ec', border:'#e0a898',
+                  rule:'Unequal diagonals + bisect at 90°'},
+  Parallelogram: {emoji:'▱',  color:'#c08030', bg:'#fdf5e8', border:'#e0c080',
+                  rule:'Unequal diagonals + bisect each other (any angle)'},
+  Kite:          {emoji:'🪁', color:'#6a4a90', bg:'#f2eef8', border:'#b8a0d8',
+                  rule:'Diagonals cross at 90°; one bisects the other'},
+  General:       {emoji:'⬡',  color:'#4a4640', bg:'#f3f0ea', border:'#d4cfc5',
+                  rule:'No special diagonal relationship'},
+};
+
+const PROPS = [
+  {key:'equal',     label:'Equal diagonals'},
+  {key:'bisect',    label:'Diagonals bisect each other'},
+  {key:'perp',      label:'Diagonals perpendicular (90°)'},
+  {key:'allAngles', label:'All interior angles = 90°'},
+  {key:'oppEqual',  label:'Opposite sides equal'},
+  {key:'oppPar',    label:'Opposite sides parallel'},
+  {key:'allEqual',  label:'All four sides equal'},
+];
+const SHAPE_PROPS = {
+  Square:        {equal:1,bisect:1,perp:1,allAngles:1,oppEqual:1,oppPar:1,allEqual:1},
+  Rectangle:     {equal:1,bisect:1,perp:0,allAngles:1,oppEqual:1,oppPar:1,allEqual:0},
+  Rhombus:       {equal:0,bisect:1,perp:1,allAngles:0,oppEqual:1,oppPar:1,allEqual:1},
+  Parallelogram: {equal:0,bisect:1,perp:0,allAngles:0,oppEqual:1,oppPar:1,allEqual:0},
+  Kite:          {equal:0,bisect:0,perp:1,allAngles:0,oppEqual:0,oppPar:0,allEqual:0},
+  General:       {equal:0,bisect:0,perp:0,allAngles:0,oppEqual:0,oppPar:0,allEqual:0},
 };
 
 function classify(d1,d2,ang,split){
-  const eq = Math.abs(d1-d2)<6;
-  const perp = Math.abs(ang-90)<8;
-  const bisect = Math.abs(split-50)<5;
+  const eq     = Math.abs(d1-d2) < 7;
+  const perp   = Math.abs(ang-90) < 8;
+  const bisect = Math.abs(split-50) < 5;
   if(eq && perp && bisect) return 'Square';
-  if(eq && bisect) return 'Rectangle';
-  if(perp && bisect) return 'Rhombus';
-  if(bisect) return 'Parallelogram';
-  if(perp) return 'Kite';
+  if(eq && bisect)         return 'Rectangle';
+  if(perp && bisect)       return 'Rhombus';
+  if(bisect)               return 'Parallelogram';
+  if(perp)                 return 'Kite';
   return 'General';
 }
 
-const RULES={
-  'Square':    'Equal diagonals + bisect each other + cross at 90°',
-  'Rectangle': 'Equal diagonals + bisect each other (any angle)',
-  'Rhombus':   'Unequal diagonals + bisect each other + cross at 90°',
-  'Parallelogram':'Unequal diagonals + bisect each other (any angle)',
-  'Kite':      'Unequal diagonals + cross at 90° (one bisects the other)',
-  'General':   'No special diagonal relationship',
-};
-
-const PROPS_LIST=[
-  {key:'equal',    label:'Equal diagonals'},
-  {key:'bisect',   label:'Diagonals bisect each other'},
-  {key:'perp',     label:'Diagonals perpendicular'},
-  {key:'allAngles',label:'All angles 90°'},
-  {key:'oppEqual', label:'Opposite sides equal'},
-  {key:'oppPar',   label:'Opposite sides parallel'},
-  {key:'allEqual', label:'All sides equal'},
-];
-const SHAPE_PROPS={
-  'Square':    {equal:1,bisect:1,perp:1,allAngles:1,oppEqual:1,oppPar:1,allEqual:1},
-  'Rectangle': {equal:1,bisect:1,perp:0,allAngles:1,oppEqual:1,oppPar:1,allEqual:0},
-  'Rhombus':   {equal:0,bisect:1,perp:1,allAngles:0,oppEqual:1,oppPar:1,allEqual:1},
-  'Parallelogram':{equal:0,bisect:1,perp:0,allAngles:0,oppEqual:1,oppPar:1,allEqual:0},
-  'Kite':      {equal:0,bisect:0,perp:1,allAngles:0,oppEqual:0,oppPar:0,allEqual:0},
-  'General':   {equal:0,bisect:0,perp:0,allAngles:0,oppEqual:0,oppPar:0,allEqual:0},
-};
-
 function render(){
-  const d1=parseInt(document.getElementById('d1').value);
-  const d2=parseInt(document.getElementById('d2').value);
-  const ang=parseInt(document.getElementById('ang').value);
-  const split=parseInt(document.getElementById('split').value)/100;
+  const d1    = +document.getElementById('d1').value;
+  const d2    = +document.getElementById('d2').value;
+  const ang   = +document.getElementById('ang').value;
+  const split = +document.getElementById('split').value / 100;
 
-  document.getElementById('d1v').textContent=d1;
-  document.getElementById('d2v').textContent=d2;
-  document.getElementById('angv').textContent=ang+'°';
-  document.getElementById('splitv').textContent=Math.round(split*100)+'%';
+  document.getElementById('d1v').textContent    = d1;
+  document.getElementById('d2v').textContent    = d2;
+  document.getElementById('angv').textContent   = ang + '°';
+  document.getElementById('splitv').textContent = Math.round(split*100) + '%';
 
-  const shape=classify(d1,d2,ang,split);
-  const col=QUAD_COLORS[shape];
+  const shape = classify(d1, d2, ang, split);
+  const sh    = SHAPES[shape];
 
   // Banner
-  const banner=document.getElementById('resultBanner');
-  banner.style.background=col.bg;
-  banner.style.borderColor=col.border;
-  document.getElementById('rbName').style.color=col.text;
-  document.getElementById('rbName').textContent=shape;
-  document.getElementById('rbRule').textContent=RULES[shape];
+  const banner = document.getElementById('shape-banner');
+  banner.style.background   = sh.bg;
+  banner.style.borderColor  = sh.border;
+  document.getElementById('sb-emoji').textContent = sh.emoji;
+  document.getElementById('sb-name').textContent  = shape;
+  document.getElementById('sb-name').style.color  = sh.color;
+  document.getElementById('sb-rule').textContent  = sh.rule;
 
-  // Properties chips
-  const props=SHAPE_PROPS[shape];
-  const grid=document.getElementById('propsGrid');
-  grid.innerHTML='';
-  PROPS_LIST.forEach(p=>{
-    const chip=document.createElement('div');
-    chip.className='prop-chip '+(props[p.key]?'yes':'no');
-    chip.innerHTML=`<span class="picon">${props[p.key]?'✓':'–'}</span>${p.label}`;
+  // Properties
+  const grid  = document.getElementById('props-grid');
+  grid.innerHTML = '';
+  const props = SHAPE_PROPS[shape];
+  PROPS.forEach(p => {
+    const chip = document.createElement('div');
+    chip.className = 'prop-chip ' + (props[p.key] ? 'yes' : 'no');
+    chip.innerHTML = `<span class="prop-icon">${props[p.key] ? '✓' : '–'}</span>${p.label}`;
     grid.appendChild(chip);
   });
 
-  // Draw
-  drawQuad(d1,d2,ang,split,col.border,shape);
+  // Canvas
+  drawQuad(d1, d2, ang, split, sh.color, sh.border, shape);
 
   // Insight
-  const ins=document.getElementById('insight');
-  const rules=[];
-  if(Math.abs(d1-d2)<6) rules.push('equal diagonals');
-  else rules.push(`diagonal ratio ${d1}:${d2}`);
-  if(Math.abs(ang-90)<8) rules.push('perpendicular diagonals');
-  else rules.push(`crossing at ${ang}°`);
-  if(Math.abs(split-50)<5) rules.push('diagonals bisect each other');
-  else rules.push(`diagonals split ${Math.round(split*100)}% / ${Math.round((1-split)*100)}%`);
-  ins.innerHTML=`<strong>Diagonals:</strong> ${rules.join(', ')}. This produces a <strong>${shape}</strong>.
-    <span class="eq">Rule: ${RULES[shape]}</span>
-    Try making equal diagonals that bisect at 90° to get a square. Make them unequal but still bisecting to get a parallelogram.`;
+  const parts = [];
+  if(Math.abs(d1-d2)<7) parts.push('equal diagonals');
+  else parts.push(`diagonals ${d1} and ${d2} (ratio ${Math.round(d1/d2*10)/10}:1)`);
+  if(Math.abs(ang-90)<8) parts.push('perpendicular crossing');
+  else parts.push(`crossing at ${ang}°`);
+  if(Math.abs(split-50)<5) parts.push('diagonals bisecting each other');
+  else parts.push(`split ${Math.round(split*100)}%/${Math.round((1-split)*100)}% (not bisecting)`);
+
+  document.getElementById('insight').innerHTML =
+    `<strong>Current diagonals:</strong> ${parts.join(', ')}. Result: <strong>${shape}</strong>.
+    <br><br>To get a <strong>Square</strong>: make d₁ = d₂, angle = 90°, split = 50%. 
+    For a <strong>Kite</strong>: angle = 90°, split ≠ 50%. 
+    For a <strong>Rhombus</strong>: d₁ ≠ d₂, angle = 90°, split = 50%.`;
 }
 
-function drawQuad(d1,d2,ang,split,borderColor,shape){
-  const cvs=document.getElementById('cvs');
-  const PR=window.devicePixelRatio||1;
-  const W=cvs.parentElement.clientWidth;
-  cvs.width=W*PR; cvs.height=340*PR;
-  cvs.style.width=W+'px'; cvs.style.height='340px';
-  const ctx=cvs.getContext('2d');
-  ctx.scale(PR,PR);
-  ctx.fillStyle='#fafaf8'; ctx.fillRect(0,0,W,340);
+function drawQuad(d1, d2, ang, split, shapeColor, borderColor, shape){
+  const cvs = document.getElementById('cvs');
+  const PR  = Math.min(window.devicePixelRatio||1, 2);
+  const W   = cvs.parentElement.clientWidth;
+  const H   = 340;
+  cvs.width  = W*PR; cvs.height = H*PR;
+  cvs.style.width  = W+'px'; cvs.style.height = H+'px';
+  const ctx = cvs.getContext('2d');
+  ctx.resetTransform(); ctx.scale(PR,PR);
 
-  const cx=W/2, cy=170;
-  const ang_rad=ang*Math.PI/180;
+  // Warm paper background + dot grid
+  ctx.fillStyle = '#f3f0ea';
+  ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = 'rgba(180,170,158,.2)';
+  for(let gx=28;gx<W;gx+=28)
+    for(let gy=28;gy<H;gy+=28){
+      ctx.beginPath();ctx.arc(gx,gy,1.1,0,Math.PI*2);ctx.fill();
+    }
 
-  // Diagonal 1: horizontal, length d1
-  // O splits AC: OA = d1*split, OC = d1*(1-split)
-  const oa=d1*split, oc=d1*(1-split);
-  // Diagonal 2: at angle from horizontal, length d2
-  // O is the crossing point, OB = d2*0.5 always for visualization (kite: not bisected on BD)
-  // For kite and general: BD is not bisected; we use 50/50 for BD always, split only affects AC
-  const ob=d2*0.5, od=d2*0.5;
+  const cx = W/2, cy = H/2;
+  const ar = ang * Math.PI/180;
 
-  const A={x:cx-oa, y:cy};
-  const C={x:cx+oc, y:cy};
-  const B={x:cx+ob*Math.cos(ang_rad-Math.PI/2), y:cy-ob*Math.sin(ang_rad-Math.PI/2)};
-  const D={x:cx-od*Math.cos(ang_rad-Math.PI/2), y:cy+od*Math.sin(ang_rad-Math.PI/2)};
+  // Crossing point splits diagonal AC
+  const oa = d1*split, oc = d1*(1-split);
+  const ob = d2*0.5,   od = d2*0.5;
 
-  // Draw diagonals
+  const A = {x:cx-oa, y:cy};
+  const C = {x:cx+oc, y:cy};
+  const B = {x:cx + ob*Math.cos(ar-Math.PI/2), y:cy - ob*Math.sin(ar-Math.PI/2)};
+  const D = {x:cx - od*Math.cos(ar-Math.PI/2), y:cy + od*Math.sin(ar-Math.PI/2)};
+  const O = {x:cx, y:cy};
+
+  // Quad fill
+  ctx.beginPath();
+  ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.lineTo(C.x,C.y);ctx.lineTo(D.x,D.y);
+  ctx.closePath();
+  ctx.fillStyle = shapeColor + '14'; ctx.fill();
+
+  // Diagonals (dashed)
   ctx.setLineDash([5,4]);
-  ctx.strokeStyle='#c0b8a8'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(C.x,C.y); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(B.x,B.y); ctx.lineTo(D.x,D.y); ctx.stroke();
+  ctx.strokeStyle = 'rgba(140,130,118,.55)'; ctx.lineWidth = 1.5;
+  ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(C.x,C.y);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(B.x,B.y);ctx.lineTo(D.x,D.y);ctx.stroke();
   ctx.setLineDash([]);
 
-  // Draw quadrilateral
+  // Quad outline
   ctx.beginPath();
-  ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y);
-  ctx.lineTo(C.x,C.y); ctx.lineTo(D.x,D.y);
+  ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.lineTo(C.x,C.y);ctx.lineTo(D.x,D.y);
   ctx.closePath();
-  ctx.fillStyle=borderColor+'18';
-  ctx.fill();
-  ctx.strokeStyle=borderColor; ctx.lineWidth=2.5; ctx.stroke();
+  ctx.strokeStyle = borderColor; ctx.lineWidth = 2.5; ctx.stroke();
 
-  // Right angle marker at O if perpendicular
+  // Right-angle box at O
   if(Math.abs(ang-90)<8){
     const sq=8;
+    ctx.strokeStyle='rgba(100,90,80,.5)';ctx.lineWidth=1.5;
     ctx.beginPath();
-    ctx.moveTo(cx+sq,cy); ctx.lineTo(cx+sq,cy-sq); ctx.lineTo(cx,cy-sq);
-    ctx.strokeStyle='#9a958e'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.moveTo(cx+sq,cy);ctx.lineTo(cx+sq,cy-sq);ctx.lineTo(cx,cy-sq);
+    ctx.stroke();
   }
 
-  // Labels
-  const FONT='bold 13px DM Sans, sans-serif';
-  ctx.font=FONT; ctx.fillStyle='var(--text)'; ctx.textAlign='center';
-  const labels=[{p:A,l:'A'},{p:B,l:'B'},{p:C,l:'C'},{p:D,l:'D'},{p:{x:cx,y:cy},l:'O'}];
-  const offsets=[[-14,-6],[8,-12],[14,-6],[8,16],[8,14]];
-  labels.forEach((lb,i)=>{
-    ctx.fillStyle=i<4?'#1a1814':'#9a958e';
-    ctx.font=i<4?'bold 13px DM Sans,sans-serif':'12px DM Sans,sans-serif';
-    ctx.fillText(lb.l, lb.p.x+offsets[i][0], lb.p.y+offsets[i][1]);
+  // Equal-length tick marks on diagonals
+  if(Math.abs(d1-d2)<7){
+    drawTick(ctx,A.x,A.y,C.x,C.y,shapeColor);
+    drawTick(ctx,B.x,B.y,D.x,D.y,shapeColor);
+  }
+
+  // Bisect tick marks on half-diagonals
+  if(Math.abs(split-50)<5){
+    drawTick(ctx,A.x,A.y,O.x,O.y,'rgba(100,90,80,.5)');
+    drawTick(ctx,O.x,O.y,C.x,C.y,'rgba(100,90,80,.5)');
+    drawTick(ctx,B.x,B.y,O.x,O.y,'rgba(100,90,80,.5)');
+    drawTick(ctx,O.x,O.y,D.x,D.y,'rgba(100,90,80,.5)');
+  }
+
+  // Vertex dots + labels
+  const VERTS = [{p:A,l:'A'},{p:B,l:'B'},{p:C,l:'C'},{p:D,l:'D'}];
+  const vcx = (A.x+B.x+C.x+D.x)/4, vcy=(A.y+B.y+C.y+D.y)/4;
+  VERTS.forEach(({p,l})=>{
+    // Dot
+    ctx.beginPath();ctx.arc(p.x,p.y,6,0,Math.PI*2);
+    ctx.fillStyle=shapeColor;ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,Math.PI*2);
+    ctx.fillStyle='#fff';ctx.fill();
+    // Label — push away from centroid
+    const offScale=18;
+    const dx=p.x-vcx, dy=p.y-vcy;
+    const len=Math.hypot(dx,dy)||1;
+    const lx=p.x+dx/len*offScale, ly=p.y+dy/len*offScale;
+    ctx.font='bold 13px DM Sans,sans-serif';
+    ctx.fillStyle=shapeColor;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(l,lx,ly);
   });
 
-  // Diagonal length annotations
-  ctx.font='11px DM Mono,monospace'; ctx.fillStyle='#2c5f9e';
-  ctx.fillText('d₁='+d1, cx, cy+22);
-  ctx.fillStyle='#c0392b';
-  ctx.fillText('d₂='+d2, cx+(B.x-cx)*0.7+14, cy+(B.y-cy)*0.7);
+  // O label
+  ctx.font='11px DM Sans,sans-serif';
+  ctx.fillStyle='rgba(100,90,80,.7)';
+  ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillText('O',cx+10,cy+5);
 
-  // Tick marks on equal sides / diagonals
-  if(Math.abs(d1-d2)<6){
-    drawTick(ctx, A.x,A.y,C.x,C.y,'#2c5f9e');
-    drawTick(ctx, B.x,B.y,D.x,D.y,'#c0392b');
-  }
-  // Arc for angle
-  ctx.beginPath(); ctx.strokeStyle='#e08020'; ctx.lineWidth=1.5;
-  ctx.arc(cx,cy,24, -Math.PI/2, ang_rad-Math.PI/2); ctx.stroke();
-  ctx.font='11px DM Mono'; ctx.fillStyle='#e08020';
-  const midA=(-Math.PI/2+ang_rad-Math.PI/2)/2;
-  ctx.fillText(ang+'°', cx+36*Math.cos(midA), cy+36*Math.sin(midA));
+  // Diagonal length labels
+  ctx.font='bold 10px DM Mono,monospace';
+  ctx.fillStyle='var(--teal,#1d6a72)';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  // d1 label — midpoint of AC, offset down
+  ctx.fillStyle='#1d6a72';
+  ctx.fillText('d₁='+d1, (A.x+C.x)/2, cy+18);
+  // d2 label — midpoint of BD, offset sideways
+  ctx.fillStyle='#b84a2a';
+  const bmx=(B.x+D.x)/2+16, bmy=(B.y+D.y)/2;
+  ctx.fillText('d₂='+d2, bmx, bmy);
+
+  // Crossing angle arc
+  ctx.strokeStyle='rgba(192,128,48,.75)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(cx,cy,22,-Math.PI/2,ar-Math.PI/2);ctx.stroke();
+  const midA=(-Math.PI/2+ar-Math.PI/2)/2;
+  ctx.font='bold 10px DM Mono,monospace';
+  ctx.fillStyle='#c08030';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(ang+'°',cx+34*Math.cos(midA),cy+34*Math.sin(midA));
 }
 
 function drawTick(ctx,x1,y1,x2,y2,color){
-  const mx=(x1+x2)/2, my=(y1+y2)/2;
-  const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
-  const nx=-dy/len*5, ny=dx/len*5;
-  ctx.beginPath(); ctx.strokeStyle=color; ctx.lineWidth=2;
-  ctx.moveTo(mx-nx-nx*0.5,my-ny-ny*0.5); ctx.lineTo(mx+nx+nx*0.5,my+ny+ny*0.5); ctx.stroke();
+  const mx=(x1+x2)/2,my=(y1+y2)/2;
+  const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+  if(len<1)return;
+  const nx=-dy/len*5,ny=dx/len*5;
+  ctx.strokeStyle=color;ctx.lineWidth=2;
+  ctx.beginPath();
+  ctx.moveTo(mx-nx,my-ny);ctx.lineTo(mx+nx,my+ny);
+  ctx.stroke();
 }
 
+new ResizeObserver(render).observe(document.getElementById('cvs').parentElement);
 render();
 </script>
 </body>
